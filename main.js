@@ -86,3 +86,36 @@
 //     console.log(isi)
 //     p.innerHTML = isi
 // })
+
+function toggleCheckbox(checkbox) {
+    checkbox.checked = !checkbox.checked;
+  }
+
+  function tambah() {
+    const inputList = document.getElementById("input-list").value;
+    if (inputList.trim() === "") {
+      alert("harus diisi yaa maniest");
+      return;
+    }
+  
+    const list = document.getElementById("list");
+    const listItem = document.createElement("li");
+  
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.addEventListener("click", function () {
+      toggleCheckbox(checkbox);
+    });
+  
+    const label = document.createElement("label");
+    label.textContent = inputList;
+  
+    document.getElementById("input-list").value = "";
+  
+    listItem.appendChild(checkbox);
+    listItem.appendChild(label);
+
+    list.appendChild(listItem);
+  }
+
+  document.getElementById("button").addEventListener("click", tambah);
