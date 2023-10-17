@@ -87,35 +87,53 @@
 //     p.innerHTML = isi
 // })
 
-function toggleCheckbox(checkbox) {
-    checkbox.checked = !checkbox.checked;
+const taskInput = document.getElementById("taskInput");
+const addTaskButton = document.getElementById("addTask");
+const taskList = document.getElementById("taskList");
+
+function addTask() {
+  const taskText = taskInput.value;
+  if (taskText.trim() === "") {
+    alert("Masukkan tugas terlebih dahulu");
+    return;
   }
 
-  function tambah() {
-    const inputList = document.getElementById("input-list").value;
-    if (inputList.trim() === "") {
-      alert("harus diisi yaa maniest");
-      return;
+  const listItem = document.createElement("li");
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  listItem.appendChild(checkbox);
+
+  const label = document.createElement("label");
+  label.textContent = taskText;
+
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "x";
+
+  listItem.appendChild(label);
+  listItem.appendChild(deleteButton);
+
+  taskList.appendChild(listItem);
+
+  taskInput.value = "";
+
+  deleteButton.addEventListener("click", function() {
+    listItem.remove();
+  });
+
+  checkbox.addEventListener("change", function() {
+    if (checkbox.checked) {
+      label.style.textDecoration = "line-through";
+    } else {
+      label.style.textDecoration = "none";
     }
-  
-    const list = document.getElementById("list");
-    const listItem = document.createElement("li");
-  
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.addEventListener("click", function () {
-      toggleCheckbox(checkbox);
-    });
-  
-    const label = document.createElement("label");
-    label.textContent = inputList;
-  
-    document.getElementById("input-list").value = "";
-  
-    listItem.appendChild(checkbox);
-    listItem.appendChild(label);
+  });
+}
 
-    list.appendChild(listItem);
+addTaskButton.addEventListener("click", addTask);
+
+taskInput.addEventListener("keyup", function(event) {
+  if (event.key === "Enter") {
+    addTask();
   }
-
-  document.getElementById("button").addEventListener("click", tambah);
+});
